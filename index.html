@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Satota FF TopUp</title>
+
+<style>
+:root{
+  --bg:#09090d;
+  --card:#17171f;
+  --red:#ff303b;
+  --gold:#ffc94a;
+  --text:#ffffff;
+  --muted:#aaaab6;
+  --border:#353540;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:#121218;
+  border-bottom:2px solid var(--red);
+  padding:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:var(--gold);
+  font-weight:bold;
+  font-size:17px;
+}
+
+.logo{
+  width:42px;
+  height:42px;
+  object-fit:contain;
+  border-radius:9px;
+  background:#22222b;
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:12px 15px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+.primary{
+  background:var(--red);
+  color:white;
+}
+
+.gold{
+  background:var(--gold);
+  color:#111;
+}
+
+.secondary{
+  background:#33333f;
+  color:white;
+}
+
+.container{
+  width:100%;
+  max-width:1000px;
+  margin:auto;
+  padding:14px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:17px;
+  margin:15px 0;
+}
+
+h1{
+  font-size:25px;
+  margin:12px 0;
+}
+
+h2{
+  font-size:20px;
+  margin-top:0;
+}
+
+h3{
+  font-size:17px;
+}
+
+p{
+  line-height:1.6;
+}
+
+.small{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+}
+
+.banner{
+  display:block;
+  width:100%;
+  max-height:260px;
+  object-fit:cover;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+.hero{
+  background:linear-gradient(135deg,#321016,#17171f 60%,#302410);
+  border-color:#693039;
+}
+
+.hero h1{
+  color:var(--gold);
+}
+
+input,select{
+  display:block;
+  width:100%;
+  padding:13px;
+  margin:7px 0 15px;
+  background:#0c0c12;
+  border:1px solid #41414c;
+  color:white;
+  border-radius:9px;
+  font-size:15px;
+}
+
+label{
+  display:block;
+  color:#ddd;
+  font-size:14px;
+}
+
+input:focus,select:focus{
+  outline:1px solid var(--gold);
+  border-color:var(--gold);
+}
+
+.packages{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+.package{
+  background:#20202a;
+  border:1px solid #393945;
+  border-radius:12px;
+  padding:15px 9px;
+  text-align:center;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.package.selected{
+  border:2px solid var(--gold);
+  background:#342719;
+}
+
+.diamond{
+  font-size:29px;
+}
+
+.package-name{
+  font-weight:bold;
+  margin:8px 0;
+  overflow-wrap:anywhere;
+}
+
+.price{
+  color:var(--gold);
+  font-size:18px;
+  font-weight:bold;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.message{
+  color:var(--gold);
+  overflow-wrap:anywhere;
+  font-size:14px;
+}
+
+.order{
+  background:#22222b;
+  border:1px solid #383843;
+  border-radius:10px;
+  padding:13px;
+  margin:12px 0;
+  overflow-wrap:anywhere;
+}
+
+.status{
+  display:inline-block;
+  background:#352c1c;
+  color:var(--gold);
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+.payment-box{
+  background:#24202a;
+  border-left:3px solid var(--gold);
+  padding:12px;
+  border-radius:8px;
+  margin:12px 0;
+  overflow-wrap:anywhere;
+}
+
+.full-button{
+  width:100%;
+}
+
+footer{
+  text-align:center;
+  padding:25px 15px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+@media(min-width:650px){
+  .packages{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+
+  .container{
+    padding:22px;
+  }
+
+  .hero{
+    padding:25px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <img id="siteLogo" class="logo hidden" alt="লোগো">
+    <span>🔥 SATOTA FF TOPUP</span>
+  </div>
+
+  <button id="logoutBtn" class="primary hidden">
+    লগআউট
+  </button>
+</header>
+
+<main class="container">
+
+  <!-- WEBSITE BANNER -->
+  <section class="card hero">
+
+    <img
+      id="siteBanner"
+      class="banner hidden"
+      alt="Satota FF TopUp ব্যানার"
+    >
+
+    <h1 id="siteTitle">SATOTA FF TOPUP 🎮</h1>
+
+    <p>
+      💎 আপনার পছন্দের Free Fire ডায়মন্ড প্যাকেজ নির্বাচন করুন।
+      সঠিক Player UID দিয়ে অর্ডার জমা দিন।
+    </p>
+
+    <p class="small">
+      অর্ডারের আগে প্যাকেজের মূল্য এবং পেমেন্ট নির্দেশনা যাচাই করুন।
+    </p>
+
+  </section>
+
+
+  <!-- LOGIN AND REGISTER -->
+  <section id="authPanel" class="card">
+
+    <h2 id="authTitle">🔐 লগইন করুন</h2>
+
+    <p class="small">
+      অ্যাকাউন্ট থাকলে লগইন করুন। নতুন হলে একটি অ্যাকাউন্ট তৈরি করুন।
+    </p>
+
+    <form id="authForm">
+
+      <label for="email">ইমেইল ঠিকানা</label>
+
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        placeholder="আপনার ইমেইল লিখুন"
+        required
+      >
+
+      <label for="password">পাসওয়ার্ড</label>
+
+      <input
+        id="password"
+        type="password"
+        minlength="6"
+        autocomplete="current-password"
+        placeholder="কমপক্ষে ৬ অক্ষর"
+        required
+      >
+
+      <button
+        id="authSubmit"
+        class="primary full-button"
+        type="submit"
+      >
+        লগইন করুন
+      </button>
+
+    </form>
+
+    <p id="toggleText" class="small">নতুন সদস্য?</p>
+
+    <button
+      id="toggleAuth"
+      class="gold full-button"
+      type="button"
+    >
+      নতুন অ্যাকাউন্ট তৈরি করুন
+    </button>
+
+    <p id="authMessage" class="message" role="status"></p>
+
+  </section>
+
+
+  <!-- USER PANEL -->
+  <section id="userPanel" class="hidden">
+
+    <div class="card">
+      <h2>👋 স্বাগতম!</h2>
+      <p id="userEmail" class="small"></p>
+      <p class="small">
+        আপনার অ্যাকাউন্ট থেকে ডায়মন্ড অর্ডার এবং অর্ডারের অবস্থা দেখতে পারবেন।
+      </p>
+    </div>
+
+
+    <!-- DIAMOND PACKAGES -->
+    <div class="card">
+
+      <h2>💎 ডায়মন্ড প্যাকেজ</h2>
+
+      <p class="small">
+        নিচ থেকে পছন্দের প্যাকেজ নির্বাচন করুন।
+      </p>
+
+      <div id="packageList" class="packages">
+        প্যাকেজ লোড হচ্ছে...
+      </div>
+
+      <p id="packageMessage" class="message"></p>
+
+    </div>
+
+
+    <!-- ORDER FORM -->
+    <div class="card">
+
+      <h2>🛒 অর্ডার করুন</h2>
+
+      <form id="orderForm">
+
+        <label for="playerUid">Free Fire Player UID</label>
+
+        <input
+          id="playerUid"
+          type="text"
+          inputmode="numeric"
+          pattern="[0-9]{5,20}"
+          maxlength="20"
+          placeholder="আপনার Free Fire UID লিখুন"
+          required
+        >
+
+        <label for="packageName">নির্বাচিত প্যাকেজ</label>
+
+        <input
+          id="packageName"
+          readonly
+          placeholder="আগে একটি প্যাকেজ নির্বাচন করুন"
+          required
+        >
+
+        <label for="packagePrice">প্যাকেজের মূল্য</label>
+
+        <input
+          id="packagePrice"
+          readonly
+          placeholder="৳ ০"
+          required
+        >
+
+        <label for="paymentMethod">পেমেন্ট পদ্ধতি</label>
+
+        <select id="paymentMethod" required>
+          <option value="">পেমেন্ট পদ্ধতি নির্বাচন করুন</option>
+          <option value="বিকাশ">বিকাশ</option>
+          <option value="নগদ">নগদ</option>
+          <option value="রকেট">রকেট</option>
+        </select>
+
+        <div class="payment-box">
+          <h3>💳 পেমেন্ট নির্দেশনা</h3>
+
+          <p id="paymentInstructions">
+            পেমেন্ট নির্দেশনা লোড হচ্ছে...
+          </p>
+
+          <p class="small">
+            পেমেন্ট করার আগে অ্যাডমিনের দেওয়া নির্দেশনা অনুসরণ করুন।
+          </p>
+        </div>
+
+        <label for="transactionId">
+          পেমেন্ট Transaction ID
+        </label>
+
+        <input
+          id="transactionId"
+          type="text"
+          maxlength="100"
+          placeholder="পেমেন্টের Transaction ID লিখুন"
+          required
+        >
+
+        <button
+          id="submitOrder"
+          class="primary full-button"
+          type="submit"
+        >
+          অর্ডার জমা দিন
+        </button>
+
+      </form>
+
+      <p id="orderMessage" class="message" role="status"></p>
+
+    </div>
+
+
+    <!-- ORDER HISTORY -->
+    <div class="card">
+
+      <h2>📋 আমার অর্ডার</h2>
+
+      <div id="myOrders">
+        অর্ডার লোড হচ্ছে...
+      </div>
+
+    </div>
+
+
+    <!-- SUPPORT -->
+    <div class="card">
+
+      <h2>🎧 কাস্টমার সাপোর্ট</h2>
+
+      <p id="supportText">
+        সাপোর্টের তথ্য লোড হচ্ছে...
+      </p>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <p>🔥 Satota FF TopUp</p>
+  <p>Free Fire Top-Up Service</p>
+</footer>
+
+
+<script type="module">
+
+/* =====================================
+   FIREBASE SDK
+===================================== */
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+import {
+  getDatabase,
+  ref,
+  get,
+  set,
+  push,
+  query,
+  orderByChild,
+  equalTo,
+  onValue
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+
+/* =====================================
+   YOUR FIREBASE CONFIGURATION
+===================================== */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAG9C5CfFpeZ3X2GNKtFOhpGHX3nHs27IM",
+  authDomain: "satota-ff-topup.firebaseapp.com",
+  databaseURL: "https://satota-ff-topup-default-rtdb.firebaseio.com",
+  projectId: "satota-ff-topup",
+  storageBucket: "satota-ff-topup.firebasestorage.app",
+  messagingSenderId: "652198658626",
+  appId: "1:652198658626:web:3307e6a57e60a299f3e3db"
+};
+
+
+/* INITIALIZE FIREBASE */
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const $ = id => document.getElementById(id);
+
+
+/* STATE */
+
+let isRegistering = false;
+let selectedPackage = null;
+let packageCache = {};
+let stopOrders = null;
+let stopSettings = null;
+let stopPackages = null;
+
+
+/* SAFE HTML */
+
+function safe(value){
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[ch]);
+}
+
+
+/* AUTH MODE */
+
+$("toggleAuth").addEventListener("click",()=>{
+
+  isRegistering = !isRegistering;
+
+  $("authTitle").textContent =
+    isRegistering ? "📝 নতুন অ্যাকাউন্ট তৈরি করুন" :
+                    "🔐 লগইন করুন";
+
+  $("authSubmit").textContent =
+    isRegistering ? "রেজিস্ট্রেশন করুন" : "লগইন করুন";
+
+  $("toggleAuth").textContent =
+    isRegistering ? "আগে অ্যাকাউন্ট আছে? লগইন করুন" :
+                    "নতুন অ্যাকাউন্ট তৈরি করুন";
+
+  $("toggleText").textContent =
+    isRegistering ? "আগে অ্যাকাউন্ট থাকলে লগইন করুন।" :
+                    "নতুন সদস্য?";
+
+  $("password").autocomplete =
+    isRegistering ? "new-password" : "current-password";
+
+  $("authMessage").textContent = "";
+
+});
+
+
+/* REGISTER / LOGIN */
+
+$("authForm").addEventListener("submit",async event=>{
+
+  event.preventDefault();
+
+  const button = $("authSubmit");
+
+  button.disabled = true;
+  $("authMessage").textContent = "অপেক্ষা করুন...";
+
+  try{
+
+    const email = $("email").value.trim();
+    const password = $("password").value;
+
+    if(isRegistering){
+
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await set(ref(db,"users/"+result.user.uid),{
+        email: email,
+        createdAt: Date.now()
+      });
+
+      $("authMessage").textContent =
+        "অ্যাকাউন্ট তৈরি হয়েছে।";
+
+    }else{
+
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      $("authMessage").textContent =
+        "লগইন সফল হয়েছে।";
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    const messages = {
+      "auth/email-already-in-use":
+        "এই ইমেইলে আগে থেকেই অ্যাকাউন্ট আছে।",
+      "auth/invalid-email":
+        "সঠিক ইমেইল ঠিকানা লিখুন।",
+      "auth/weak-password":
+        "আরও শক্তিশালী পাসওয়ার্ড দিন।",
+      "auth/invalid-credential":
+        "ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।",
+      "auth/network-request-failed":
+        "ইন্টারনেট সংযোগ পরীক্ষা করুন।"
+    };
+
+    $("authMessage").textContent =
+      messages[error.code] ||
+      "সমস্যা হয়েছে। Firebase Authentication ও Database Rules পরীক্ষা করুন।";
+
+  }finally{
+
+    button.disabled = false;
+
+  }
+
+});
+
+
+/* LOGOUT */
+
+$("logoutBtn").addEventListener("click",async()=>{
+
+  try{
+    await signOut(auth);
+  }catch(error){
+    alert("লগআউট করা যায়নি।");
+  }
+
+});
+
+
+/* LOAD WEBSITE SETTINGS */
+
+function loadSettings(){
+
+  if(stopSettings) stopSettings();
+
+  stopSettings = onValue(
+    ref(db,"settings"),
+    snapshot=>{
+
+      const settings = snapshot.val() || {};
+
+      $("siteTitle").textContent =
+        settings.siteTitle || "SATOTA FF TOPUP 🎮";
+
+      $("paymentInstructions").textContent =
+        settings.paymentInstructions ||
+        "পেমেন্টের নির্দেশনা এখনো দেওয়া হয়নি।";
+
+      $("supportText").textContent =
+        settings.supportText ||
+        "সাপোর্টের জন্য অ্যাডমিনের সঙ্গে যোগাযোগ করুন।";
+
+      if(settings.logoUrl){
+
+        $("siteLogo").src = settings.logoUrl;
+        $("siteLogo").classList.remove("hidden");
+
+      }else{
+
+        $("siteLogo").classList.add("hidden");
+
+      }
+
+      if(settings.bannerUrl){
+
+        $("siteBanner").src = settings.bannerUrl;
+        $("siteBanner").classList.remove("hidden");
+
+      }else{
+
+        $("siteBanner").classList.add("hidden");
+
+      }
+
+    },
+    error=>{
+
+      console.error("Settings error:",error);
+
+    }
+  );
+
+}
+
+
+/* LOAD DIAMOND PACKAGES */
+
+function loadPackages(){
+
+  if(stopPackages) stopPackages();
+
+  stopPackages = onValue(
+    ref(db,"packages"),
+    snapshot=>{
+
+      const box = $("packageList");
+      box.replaceChildren();
+
+      packageCache = snapshot.val() || {};
+
+      const entries = Object.entries(packageCache)
+        .filter(([id,p])=>
+          p &&
+          p.active !== false &&
+          typeof p.name === "string" &&
+          Number.isFinite(Number(p.price)) &&
+          Number(p.price) > 0
+        );
+
+      if(!entries.length){
+
+        box.textContent =
+          "এখনো কোনো ডায়মন্ড প্যাকেজ যোগ করা হয়নি।";
+
+        return;
+
+      }
+
+      entries.forEach(([id,p])=>{
+
+        const item = document.createElement("div");
+
+        item.className = "package";
+
+        item.innerHTML = `
+          <div class="diamond">💎</div>
+          <div class="package-name">${safe(p.name)}</div>
+          <div class="price">৳${safe(p.price)}</div>
+          <p class="small">নির্বাচন করতে চাপ দিন</p>
+        `;
+
+        item.addEventListener("click",()=>{
+
+          selectedPackage = {
+            id: id,
+            name: p.name,
+            price: Number(p.price)
+          };
+
+          document.querySelectorAll(".package")
+            .forEach(el=>el.classList.remove("selected"));
+
+          item.classList.add("selected");
+
+          $("packageName").value = p.name;
+          $("packagePrice").value = "৳ "+p.price;
+
+          $("packageMessage").textContent =
+            "প্যাকেজ নির্বাচন করা হয়েছে।";
+
+        });
+
+        box.appendChild(item);
+
+      });
+
+    },
+    error=>{
+
+      console.error(error);
+
+      $("packageList").textContent =
+        "প্যাকেজ লোড হয়নি। Firebase Database Rules পরীক্ষা করুন।";
+
+    }
+  );
+
+}
+
+
+/* LOAD THE LOGGED-IN USER'S ORDERS */
+
+function loadMyOrders(uid){
+
+  if(stopOrders) stopOrders();
+
+  const ordersQuery = query(
+    ref(db,"orders"),
+    orderByChild("userId"),
+    equalTo(uid)
+  );
+
+  stopOrders = onValue(
+    ordersQuery,
+    snapshot=>{
+
+      const box = $("myOrders");
+      box.replaceChildren();
+
+      const data = snapshot.val() || {};
+
+      const entries = Object.entries(data)
+        .sort((a,b)=>
+          (b[1].createdAt || 0) -
+          (a[1].createdAt || 0)
+        );
+
+      if(!entries.length){
+
+        box.textContent = "আপনার কোনো অর্ডার নেই।";
+
+        return;
+
+      }
+
+      entries.forEach(([id,order])=>{
+
+        const div = document.createElement("div");
+
+        div.className = "order";
+
+        div.innerHTML = `
+          <strong>অর্ডার নম্বর: ${safe(id)}</strong>
+
+          <p>প্যাকেজ: ${safe(order.packageName)}</p>
+
+          <p>Player UID: ${safe(order.playerUid)}</p>
+
+          <p>মূল্য: ৳${safe(order.price)}</p>
+
+          <p>পেমেন্ট পদ্ধতি: ${safe(order.paymentMethod)}</p>
+
+          <p>স্ট্যাটাস:
+            <span class="status">
+              ${safe(order.status || "অপেক্ষমাণ")}
+            </span>
+          </p>
+
+          <p class="small">
+            অর্ডার আইডি সংরক্ষণ করে রাখুন।
+          </p>
+        `;
+
+        box.appendChild(div);
+
+      });
+
+    },
+    error=>{
+
+      console.error("Orders error:",error);
+
+      $("myOrders").textContent =
+        "অর্ডার দেখা যাচ্ছে না। Firebase Database Rules পরীক্ষা করুন।";
+
+    }
+  );
+
+}
+
+
+/* SUBMIT ORDER */
+
+$("orderForm").addEventListener("submit",async event=>{
+
+  event.preventDefault();
+
+  const user = auth.currentUser;
+
+  if(!user){
+
+    $("orderMessage").textContent =
+      "অর্ডার করার আগে লগইন করুন।";
+
+    return;
+
+  }
+
+  if(!selectedPackage){
+
+    $("orderMessage").textContent =
+      "প্রথমে একটি ডায়মন্ড প্যাকেজ নির্বাচন করুন।";
+
+    return;
+
+  }
+
+  const playerUid = $("playerUid").value.trim();
+  const transactionId = $("transactionId").value.trim();
+  const paymentMethod = $("paymentMethod").value;
+
+  if(!/^[0-9]{5,20}$/.test(playerUid)){
+
+    $("orderMessage").textContent =
+      "সঠিক Free Fire Player UID লিখুন।";
+
+    return;
+
+  }
+
+  if(transactionId.length < 4){
+
+    $("orderMessage").textContent =
+      "সঠিক Transaction ID লিখুন।";
+
+    return;
+
+  }
+
+  const button = $("submitOrder");
+
+  button.disabled = true;
+
+  $("orderMessage").textContent =
+    "অর্ডার জমা হচ্ছে...";
+
+  try{
+
+    /*
+      প্যাকেজের বর্তমান মূল্য আবার যাচাই করা হচ্ছে।
+      চূড়ান্ত নিরাপত্তার জন্য Database Rules বা trusted backend-এও
+      মূল্য যাচাই করতে হবে।
+    */
+
+    const packageSnapshot = await get(
+      ref(db,"packages/"+selectedPackage.id)
+    );
+
+    if(!packageSnapshot.exists()){
+
+      throw new Error("প্যাকেজটি আর উপলভ্য নেই।");
+
+    }
+
+    const currentPackage = packageSnapshot.val();
+
+    if(
+      currentPackage.active === false ||
+      currentPackage.name !== selectedPackage.name ||
+      Number(currentPackage.price) !== selectedPackage.price
+    ){
+
+      selectedPackage = null;
+
+      $("packageName").value = "";
+      $("packagePrice").value = "";
+
+      throw new Error(
+        "প্যাকেজের দাম বা অবস্থা পরিবর্তিত হয়েছে। আবার প্যাকেজ নির্বাচন করুন।"
+      );
+
+    }
+
+    const orderRef = push(ref(db,"orders"));
+
+    await set(orderRef,{
+
+      userId: user.uid,
+
+      playerUid: playerUid,
+
+      packageId: selectedPackage.id,
+
+      packageName: selectedPackage.name,
+
+      price: selectedPackage.price,
+
+      paymentMethod: paymentMethod,
+
+      transactionId: transactionId,
+
+      status: "অপেক্ষমাণ",
+
+      createdAt: Date.now()
+
+    });
+
+    $("orderForm").reset();
+
+    $("packageName").value = "";
+    $("packagePrice").value = "";
+
+    selectedPackage = null;
+
+    document.querySelectorAll(".package")
+      .forEach(el=>el.classList.remove("selected"));
+
+    $("orderMessage").textContent =
+      "✅ অর্ডার জমা হয়েছে! পেমেন্ট যাচাইয়ের জন্য অপেক্ষা করুন।";
+
+  }catch(error){
+
+    console.error("Order error:",error);
+
+    $("orderMessage").textContent =
+      error.message ||
+      "অর্ডার জমা হয়নি। Firebase Database Rules পরীক্ষা করুন।";
+
+  }finally{
+
+    button.disabled = false;
+
+  }
+
+});
+
+
+/* AUTH STATE */
+
+onAuthStateChanged(auth,user=>{
+
+  $("authPanel").classList.toggle("hidden",!!user);
+
+  $("userPanel").classList.toggle("hidden",!user);
+
+  $("logoutBtn").classList.toggle("hidden",!user);
+
+  if(stopOrders){
+
+    stopOrders();
+    stopOrders = null;
+
+  }
+
+  if(user){
+
+    $("userEmail").textContent =
+      "আপনার অ্যাকাউন্ট: "+(user.email || "");
+
+    loadMyOrders(user.uid);
+
+  }
+
+});
+
+
+/* START LISTENERS */
+
+loadSettings();
+loadPackages();
+
+</script>
+
+</body>
+</html>
